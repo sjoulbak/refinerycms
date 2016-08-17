@@ -78,6 +78,15 @@
       <%= f.label :show_in_menu, t('.show_in_menu_description'),
                   :class => "stripped" %>
     </div>
+    <div class='field'>
+      <span class='label_with_help'>
+        <%= f.label :expanded, t('.expanded') %>
+        <%= refinery_help_tag t('.expanded_help') %>
+      </span>
+      <%= f.check_box :expanded %>
+      <%= f.label :expanded, t('.expanded_label'),
+                  :class => "stripped" %>
+    </div>
 
     <%= render 'form_extra_fields_for_more_options', :f => f %>
   </div>

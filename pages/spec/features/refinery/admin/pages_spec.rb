@@ -108,11 +108,21 @@ module Refinery
               expect(page).not_to have_content(locations.title)
             end
 
-            it "expands children", js: true do
-              find("#page_#{company.id} .title.toggle").click
+            context "expands children" do
+              it "by clicking on the toggle button", js: true do
+                find("#page_#{company.id} .title.toggle").click
 
-              expect(page).to have_content(team.title)
-              expect(page).to have_content(locations.title)
+                expect(page).to have_content(team.title)
+                expect(page).to have_content(locations.title)
+              end
+
+              it "when expended is set true", js: true do
+                company.toggle!(:expanded)
+                visit refinery.admin_pages_path
+
+                expect(page).to have_content(team.title)
+                expect(page).to have_content(locations.title)
+              end
             end
 
             it "expands children when nested multiple levels deep", js: true do
@@ -130,7 +140,10 @@ module Refinery
               visit refinery.admin_pages_path
             end
 
-            it "shows children" do
+            it "shows children when expanded is set false" do
+              company.toggle!(:expanded)
+              visit refinery.admin_pages_path
+
               expect(page).to have_content(team.title)
               expect(page).to have_content(locations.title)
             end
