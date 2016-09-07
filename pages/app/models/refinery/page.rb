@@ -8,6 +8,8 @@ module Refinery
   class Page < Core::BaseModel
     extend FriendlyId
 
+    has_ancestry
+
     translates :title, :menu_title, :custom_slug, :slug, :include => :seo_meta
 
     class Translation
