@@ -3,10 +3,17 @@ class AddAncestryToRefineryPages < ActiveRecord::Migration
     add_column :refinery_pages, :ancestry, :string
     add_index :refinery_pages, :ancestry
 
-    Refinery::Pages.build_ancestry_from_parent_ids
-    Refinery::Pages.check_ancestry_integrity!
+    begin
+      ::Refinery::Page.build_ancestry_from_parent_ids!
+      ::Refinery::Page.check_ancestry_integrity!
+    rescue NameError
+      warn "::Refinery::Page was not defined!"
+    end
 
     remove_column :refinery_pages, :parent_id
+    remove_column :refinery_pages, :lft
+    remove_column :refinery_pages, :rgt
+    remove_column :refinery_pages, :depth
   end
 
   def down
@@ -14,5 +21,8 @@ class AddAncestryToRefineryPages < ActiveRecord::Migration
     remove_index :refinery_pages, :ancestry
 
     add_column :refinery_pages, :parent_id, :integer
+    add_column :refinery_pages, :lft, :integer
+    add_column :refinery_pages, :rgt, :integer
+    add_column :refinery_pages, :depth, :integer
   end
 end

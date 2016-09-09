@@ -45,7 +45,7 @@ module Refinery
 end
 
 ActiveSupport.on_load(:active_record) do
-  require 'awesome_nested_set'
+  require 'ancestry'
   require 'globalize'
 end
 require 'friendly_id'

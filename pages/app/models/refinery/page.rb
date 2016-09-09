@@ -48,10 +48,6 @@ module Refinery
 
     validates :custom_slug, :uniqueness => true, :allow_blank => true
 
-    # Docs for acts_as_nested_set https://github.com/collectiveidea/awesome_nested_set
-    # rather than :delete_all we want :destroy
-    acts_as_nested_set :dependent => :destroy
-
     friendly_id :custom_slug_or_title, FriendlyIdOptions.options
 
     has_many :parts, -> {
@@ -279,7 +275,6 @@ module Refinery
         :lft => lft,
         :depth => depth,
         :menu_match => menu_match,
-        :parent_id => parent_id,
         :rgt => rgt,
         :title => menu_title.presence || title.presence,
         :type => self.class.name,
